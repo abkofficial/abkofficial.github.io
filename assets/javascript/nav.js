@@ -1,16 +1,19 @@
-fetch("nav.html")
-  .then(response => response.text())
-  .then(data => {
-      document.getElementById("nav-placeholder").innerHTML = data;
+function loadNav() {
+  fetch("nav.html")
+    .then(response => response.text())
+    .then(html => {
+      const placeholder = document.getElementById("nav-placeholder");
+      if (!placeholder) return;
+      placeholder.innerHTML = html;
+    })
+    .catch(err => {
+      console.error("Failed to load nav:", err);
+    });
+}
 
-      // Wait for nav to be inserted, then adjust padding
-      const nav = document.querySelector(".topNav");
-
-      if (nav) {
-        const updatePadding = () => {
-          document.body.style.paddingTop = nav.offsetHeight + "px";
-        };
-
-        updatePadding();               // Set initial padding
-        window.addEventListener("resize", updatePadding);  // Update on resize
-  });
+// Make sure DOM is ready before we look for #nav-placeholder
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", loadNav);
+} else {
+  loadNav();
+}
