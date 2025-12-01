@@ -1,7 +1,6 @@
 /* Push content below fixed navbar */
 body {
   margin: 0;
-  padding-top: 70px;  /* we’ll keep it simple first */
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
