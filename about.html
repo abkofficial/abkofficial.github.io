@@ -4,291 +4,532 @@
   <meta charset="UTF-8" />
   <title>Bharath Kannan - Senior Unity Developer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Modern font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #020617;
+      --bg-soft: #020617;
+      --card: rgba(15, 23, 42, 0.9);
+      --accent: #38bdf8;
+      --accent-soft: rgba(56, 189, 248, 0.12);
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --border-subtle: rgba(148, 163, 184, 0.25);
     }
 
     body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background-color: #f5f5f5;
-      color: #222;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top, #0f172a 0, #020617 55%, #000 100%);
+      color: var(--text-main);
+      min-height: 100vh;
     }
 
+    /* Outer shell so content isn’t stuck to edges */
+    .shell {
+      max-width: 1040px;
+      margin: 80px auto 40px;
+      padding: 0 16px 40px;
+    }
+
+    /* Main resume card */
     .page {
-      max-width: 900px;
-      margin: 40px auto;
-      background-color: #ffffff;
-      padding: 32px 40px;
-      box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
-      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.9));
+      border-radius: 20px;
+      padding: 32px 28px 32px;
+      box-shadow:
+        0 24px 80px rgba(15, 23, 42, 0.85),
+        0 0 0 1px rgba(148, 163, 184, 0.2);
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      backdrop-filter: blur(18px);
     }
 
-    h1, h2, h3 {
-      margin-top: 0;
+    /* Header layout */
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: flex-start;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
+
+    .identity {
+      max-width: 480px;
     }
 
     h1 {
-      font-size: 2rem;
-      margin-bottom: 4px;
-    }
-
-    .title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #444;
-      margin-bottom: 8px;
-    }
-
-    .contact {
-      font-size: 0.95rem;
-      margin-bottom: 24px;
-    }
-
-    .contact span {
-      display: inline-block;
-      margin-right: 16px;
-    }
-
-    .section {
-      margin-bottom: 24px;
-    }
-
-    .section h2 {
-      font-size: 1.2rem;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 4px;
-      margin-bottom: 12px;
+      font-size: 2.1rem;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
       font-weight: 700;
     }
 
-    .job {
-      margin-bottom: 16px;
-    }
-
-    .job-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      flex-wrap: wrap;
-      gap: 4px;
-    }
-
-    .job-company {
-      font-weight: 600;
-    }
-
-    .job-role {
-      font-style: italic;
-      font-size: 0.95rem;
-    }
-
-    .job-dates {
-      font-size: 0.9rem;
-      color: #666;
-    }
-
-    ul {
-      margin: 6px 0 0 20px;
-      padding: 0;
-    }
-
-    ul li {
-      margin-bottom: 4px;
-    }
-
-    .education-item {
-      margin-bottom: 8px;
-    }
-
-    .education-degree {
-      font-weight: 600;
-    }
-
-    .tag-list {
-      display: flex;
-      flex-wrap: wrap;
+    .title {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--accent);
+      margin-top: 4px;
+      padding: 4px 10px;
+      display: inline-flex;
+      align-items: center;
       gap: 6px;
+      border-radius: 999px;
+      background: radial-gradient(circle at top left, rgba(56,189,248,0.2), transparent 55%);
+      border: 1px solid rgba(56, 189, 248, 0.35);
     }
 
-    .tag {
-      font-size: 0.9rem;
-      padding: 4px 8px;
-      border-radius: 12px;
-      border: 1px solid #ccc;
-      background-color: #fafafa;
+    .title-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
     }
 
-    .subtle {
+    .contact {
       font-size: 0.9rem;
-      color: #555;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: flex-end;
+      text-align: right;
+    }
+
+    .contact span {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+    }
+
+    .contact-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #64748b;
     }
 
     a {
-      color: #0056b3;
+      color: var(--accent);
       text-decoration: none;
+      font-weight: 500;
     }
 
     a:hover {
       text-decoration: underline;
     }
 
+    /* Sections */
+    .section {
+      margin-bottom: 22px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .section-header h2 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #94a3b8;
+      font-weight: 600;
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: radial-gradient(circle at left, var(--accent), transparent 75%);
+      opacity: 0.35;
+    }
+
+    /* Text */
+    p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+    }
+
+    /* Experience / Projects cards inside sections */
+    .stacked-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .job, .education-item, .project-item {
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      background: radial-gradient(circle at top left, rgba(15,23,42,0.9), rgba(15,23,42,0.98));
+    }
+
+    .job-header,
+    .project-header,
+    .education-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .job-company,
+    .project-title,
+    .education-degree {
+      font-weight: 600;
+      font-size: 0.96rem;
+    }
+
+    .job-role {
+      font-size: 0.85rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .job-dates,
+    .education-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    ul {
+      margin: 4px 0 0 18px;
+      padding: 0;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    ul li {
+      margin-bottom: 4px;
+    }
+
+    .subtle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Skills */
+    .skills-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .skills-note {
+      font-size: 0.8rem;
+      color: #64748b;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      font-size: 0.82rem;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: radial-gradient(circle at top left, rgba(148,163,184,0.25), rgba(15,23,42,0.95));
+      color: #e5e7eb;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tag-pill {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+      opacity: 0.9;
+    }
+
+    /* Links in projects */
+    .project-link {
+      font-size: 0.86rem;
+      margin-top: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .project-link-icon {
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+
+    /* Make room for your nav if it’s fixed height */
+    #nav-placeholder {
+      margin-bottom: 16px;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 768px) {
+      .shell {
+        margin-top: 72px;
+      }
+
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .contact {
+        align-items: flex-start;
+        text-align: left;
+      }
+    }
+
     @media (max-width: 600px) {
       .page {
-        margin: 16px;
-        padding: 20px;
+        padding: 22px 18px 24px;
+        border-radius: 16px;
+      }
+
+      h1 {
+        font-size: 1.6rem;
       }
     }
   </style>
 </head>
 <body>
-    <div id="nav-placeholder"></div>
-    <script src="assets/javascript/nav.js"></script>
-  <div class="page">
-    <!-- Header -->
-    <header>
-      <h1>BHARATH KANNAN</h1>
-      <div class="title">Senior Unity Developer</div>
-      <div class="contact">
-        <span>Mail: <a href="mailto:resume@abkmail.com">resume@abkmail.com</a></span>
-        <span>Mobile: <a href="tel:+919003366498">+91 90033 66498</a></span>
-      </div>
-    </header>
+  <!-- Reusable nav from nav.html / nav.js -->
+  <div id="nav-placeholder"></div>
+  <script src="assets/javascript/nav.js"></script>
 
-    <!-- Profile Summary -->
-    <section class="section">
-      <h2>Profile Summary</h2>
-      <p>
-        Highly experienced Senior Unity Developer with 5+ years of expertise in creating innovative
-        AR experiences and mobile games, published on the App Store and Google Play.
-      </p>
-    </section>
-
-    <!-- Experience -->
-    <section class="section">
-      <h2>Experience</h2>
-
-      <div class="job">
-        <div class="job-header">
-          <div>
-            <div class="job-company">Microgamedev</div>
-            <div class="job-role">Senior Unity Developer</div>
+  <main class="shell">
+    <div class="page">
+      <!-- Header -->
+      <header>
+        <div class="identity">
+          <h1>BHARATH KANNAN</h1>
+          <div class="title">
+            <span class="title-dot"></span>
+            <span>Senior Unity Developer</span>
           </div>
-          <div class="job-dates">May 2024 - Present</div>
         </div>
-        <ul>
-          <li>Created iOS and Android AR apps and games end-to-end.</li>
-          <li>Building an education app with AI image generation and AI audio.</li>
-        </ul>
-      </div>
-
-      <div class="job">
-        <div class="job-header">
-          <div>
-            <div class="job-company">Appreal, Chennai (Remote)</div>
-            <div class="job-role">Senior Unity Developer</div>
-          </div>
-          <div class="job-dates">Oct 2022 - May 2024</div>
+        <div class="contact">
+          <span>
+            <span class="contact-label">Email</span>
+            <a href="mailto:resume@abkmail.com">resume@abkmail.com</a>
+          </span>
+          <span>
+            <span class="contact-label">Phone</span>
+            <a href="tel:+919003366498">+91&nbsp;90033&nbsp;66498</a>
+          </span>
         </div>
-        <ul>
-          <li>Created iOS and Android AR apps and games (excluding asset creation).</li>
-          <li>Published assets on the Unity Asset Store and mobile stores.</li>
-          <li>Built AR apps to preview furniture, jewellery, watches, and spectacles.</li>
-          <li>Developed AR Notebook games such as darts, tic-tac-toe, shooters, and basketball.</li>
-          <li>
-            Built AR Biology experiences that recognize human organ images and show 3D models with descriptions.
-          </li>
-        </ul>
-      </div>
+      </header>
 
-      <div class="job">
-        <div class="job-header">
-          <div>
-            <div class="job-company">Jongwings, Madurai</div>
-            <div class="job-role">Senior Unity Developer</div>
-          </div>
-          <div class="job-dates">May 2019 - Sep 2022</div>
+      <!-- Profile Summary -->
+      <section class="section">
+        <div class="section-header">
+          <h2>Profile Summary</h2>
+          <div class="section-line"></div>
         </div>
-        <ul>
-          <li>Created iOS and Android mobile games (excluding asset creation).</li>
-          <li>Published new updates to existing games.</li>
-          <li>Retextured mobile games for visual refresh and optimization.</li>
-          <li>Built and published games on iOS and Android stores.</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- Education -->
-    <section class="section">
-      <h2>Education</h2>
-
-      <div class="education-item">
-        <div class="education-degree">BCA</div>
-        <div class="subtle">Manipal University, Jaipur &mdash; 2024 - 2027</div>
-      </div>
-
-      <div class="education-item">
-        <div class="education-degree">GNIIT</div>
-        <div class="subtle">NIIT, Madurai &mdash; 2015 - 2018</div>
-      </div>
-
-      <div class="education-item">
-        <div class="education-degree">B.Com (IT)</div>
-        <div class="subtle">The American College, Madurai &mdash; 2014 - 2017</div>
-      </div>
-    </section>
-
-    <!-- Personal Projects -->
-    <section class="section">
-      <h2>Personal Projects</h2>
-
-      <div class="job">
-        <div class="job-header">
-          <div class="job-company">Foirfe Ball</div>
-        </div>
-        <p class="subtle">
-          A perpetual game with a procedurally generated path.<br />
-          Personal project created on Unity with C#. Core libraries: Unity UI, Unity Animation, SplineMesh.
-        </p>
         <p>
-          <a href="https://play.google.com/store/apps/details?id=com.microgamedev.foirfeball" target="_blank" rel="noopener noreferrer">
-            Foirfe Ball – Apps on Google Play
-          </a>
+          Highly experienced Senior Unity Developer with 5+ years of expertise in building polished AR experiences
+          and mobile games shipped to the App Store and Google Play. Comfortable owning features end-to-end:
+          architecture, gameplay systems, optimization, deployment, and live updates.
         </p>
-      </div>
+      </section>
 
-      <div class="job">
-        <div class="job-header">
-          <div class="job-company">Bottle Mania</div>
+      <!-- Experience -->
+      <section class="section">
+        <div class="section-header">
+          <h2>Experience</h2>
+          <div class="section-line"></div>
         </div>
-        <p class="subtle">
-          A simple bottle flip game.<br />
-          Personal project created on Unity with C#. Core libraries: Unity UI, Unity Animation.
-        </p>
-        <p>
-          <a href="https://play.google.com/store/apps/details?id=com.microgamedev.bottlemania" target="_blank" rel="noopener noreferrer">
-            Bottle Mania – Apps on Google Play
-          </a>
-        </p>
-      </div>
-    </section>
 
-    <!-- Skills -->
-    <section class="section">
-      <h2>Skills</h2>
-      <p class="subtle">Years of experience in brackets.</p>
-      <div class="tag-list">
-        <span class="tag">Unity &amp; C# (5)</span>
-        <span class="tag">UI (5)</span>
-        <span class="tag">Animations (5)</span>
-        <span class="tag">Firebase (3)</span>
-        <span class="tag">Java Plugin Development for Minecraft (3)</span>
-      </div>
-    </section>
-  </div>
+        <div class="stacked-list">
+          <div class="job">
+            <div class="job-header">
+              <div>
+                <div class="job-company">Microgamedev</div>
+                <div class="job-role">Senior Unity Developer</div>
+              </div>
+              <div class="job-dates">May 2024 – Present</div>
+            </div>
+            <ul>
+              <li>Designing and developing iOS and Android AR apps and games end-to-end using Unity and C#.</li>
+              <li>Building an education app that integrates AI image generation and AI voice for interactive learning.</li>
+            </ul>
+          </div>
+
+          <div class="job">
+            <div class="job-header">
+              <div>
+                <div class="job-company">Appreal, Chennai (Remote)</div>
+                <div class="job-role">Senior Unity Developer</div>
+              </div>
+              <div class="job-dates">Oct 2022 – May 2024</div>
+            </div>
+            <ul>
+              <li>Developed AR apps and games for iOS and Android (excluding art asset creation).</li>
+              <li>Published tools and templates on the Unity Asset Store and mobile app stores.</li>
+              <li>Implemented AR try-on experiences for furniture, jewellery, watches, and spectacles.</li>
+              <li>Created AR Notebook games including darts, tic-tac-toe, shooters, and basketball.</li>
+              <li>Built AR biology simulations that recognize human organ imagery and display 3D models with descriptions.</li>
+            </ul>
+          </div>
+
+          <div class="job">
+            <div class="job-header">
+              <div>
+                <div class="job-company">Jongwings, Madurai</div>
+                <div class="job-role">Senior Unity Developer</div>
+              </div>
+              <div class="job-dates">May 2019 – Sep 2022</div>
+            </div>
+            <ul>
+              <li>Developed mobile games for iOS and Android using Unity and C# (excluding art asset creation).</li>
+              <li>Maintained and shipped updates to existing live titles.</li>
+              <li>Retextured and visually refreshed games while optimizing performance for low-end devices.</li>
+              <li>Handled builds and publishing pipelines for both iOS and Android stores.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Education -->
+      <section class="section">
+        <div class="section-header">
+          <h2>Education</h2>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="stacked-list">
+          <div class="education-item">
+            <div class="education-header">
+              <div class="education-degree">BCA</div>
+              <div class="education-meta">2024 – 2027</div>
+            </div>
+            <p class="subtle">Manipal University, Jaipur</p>
+          </div>
+
+          <div class="education-item">
+            <div class="education-header">
+              <div class="education-degree">GNIIT</div>
+              <div class="education-meta">2015 – 2018</div>
+            </div>
+            <p class="subtle">NIIT, Madurai</p>
+          </div>
+
+          <div class="education-item">
+            <div class="education-header">
+              <div class="education-degree">B.Com (IT)</div>
+              <div class="education-meta">2014 – 2017</div>
+            </div>
+            <p class="subtle">The American College, Madurai</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Personal Projects -->
+      <section class="section">
+        <div class="section-header">
+          <h2>Personal Projects</h2>
+          <div class="section-line"></div>
+        </div>
+
+        <div class="stacked-list">
+          <div class="project-item">
+            <div class="project-header">
+              <div class="project-title">Foirfe Ball</div>
+            </div>
+            <p class="subtle">
+              Endless runner with a procedurally generated path.<br />
+              Built in Unity with C#, using Unity UI, Unity Animation, and SplineMesh.
+            </p>
+            <a
+              class="project-link"
+              href="https://play.google.com/store/apps/details?id=com.microgamedev.foirfeball"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="project-link-icon">↗</span>
+              <span>Foirfe Ball – Google Play</span>
+            </a>
+          </div>
+
+          <div class="project-item">
+            <div class="project-header">
+              <div class="project-title">Bottle Mania</div>
+            </div>
+            <p class="subtle">
+              Casual bottle flip game targeting mobile audiences.<br />
+              Built in Unity with C#, using Unity UI and Unity Animation.
+            </p>
+            <a
+              class="project-link"
+              href="https://play.google.com/store/apps/details?id=com.microgamedev.bottlemania"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span class="project-link-icon">↗</span>
+              <span>Bottle Mania – Google Play</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills -->
+      <section class="section">
+        <div class="skills-header-row">
+          <div class="section-header" style="margin-bottom: 0;">
+            <h2>Skills</h2>
+            <div class="section-line"></div>
+          </div>
+          <span class="skills-note">Numbers in brackets = years of experience</span>
+        </div>
+
+        <div class="tag-list">
+          <span class="tag">
+            <span class="tag-pill"></span>
+            Unity &amp; C# (5)
+          </span>
+          <span class="tag">
+            <span class="tag-pill"></span>
+            UI (5)
+          </span>
+          <span class="tag">
+            <span class="tag-pill"></span>
+            Animations (5)
+          </span>
+          <span class="tag">
+            <span class="tag-pill"></span>
+            Firebase (3)
+          </span>
+          <span class="tag">
+            <span class="tag-pill"></span>
+            Java Plugin Development for Minecraft (3)
+          </span>
+        </div>
+      </section>
+    </div>
+  </main>
 </body>
 </html>
