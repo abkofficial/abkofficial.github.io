@@ -53,6 +53,16 @@
       color: #0f172a;
     }
 
+    .doc-card ul {
+      margin: 0;
+      padding-left: 20px;
+      color: #0f172a;
+    }
+
+    .doc-card li + li {
+      margin-top: 8px;
+    }
+
     .status {
       font-weight: 600;
       color: #2563eb;
@@ -91,6 +101,18 @@
         <a href="https://github.com/abkofficial/privacy-policy">https://github.com/abkofficial/privacy-policy</a>
       </div>
     </section>
+
+    <section class="doc-card" aria-live="polite">
+      <div class="status">Game-specific privacy policies</div>
+      <p class="intro">
+        Each published game has its own privacy policy in the repository below.
+      </p>
+      <ul id="policy-list"></ul>
+      <div class="fallback" id="policy-list-fallback" hidden>
+        Browse the list directly in the repository:
+        <a href="https://github.com/abkofficial/privacy-policy">https://github.com/abkofficial/privacy-policy</a>
+      </div>
+    </section>
   </main>
 
   <script src="assets/javascript/nav.js"></script>
@@ -103,6 +125,11 @@
       "https://raw.githubusercontent.com/abkofficial/privacy-policy/main/README.md",
       "https://raw.githubusercontent.com/abkofficial/privacy-policy/main/index.html",
     ];
+
+    const policyList = document.getElementById("policy-list");
+    const policyListFallback = document.getElementById("policy-list-fallback");
+    const policyRepoContents =
+      "https://api.github.com/repos/abkofficial/privacy-policy/contents/";
 
     const renderText = (text) => {
       policyContent.textContent = text.trim();
@@ -142,7 +169,49 @@
       showFallback();
     };
 
+    const buildPolicyList = async () => {
+      try {
+        const response = await fetch(policyRepoContents, { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error("Failed to load policy list.");
+        }
+
+        const items = await response.json();
+        const policyFiles = items.filter((item) => {
+          if (item.type !== "file") {
+            return false;
+          }
+          if (item.name.toLowerCase() === "readme.md") {
+            return false;
+          }
+          if (item.name.toLowerCase() === "index.html") {
+            return false;
+          }
+          return item.name.endsWith(".md") || item.name.endsWith(".html");
+        });
+
+        if (policyFiles.length === 0) {
+          policyListFallback.hidden = false;
+          return;
+        }
+
+        policyFiles.forEach((file) => {
+          const listItem = document.createElement("li");
+          const link = document.createElement("a");
+          link.href = file.html_url;
+          link.textContent = file.name.replace(/[-_]/g, " ").replace(/\.\w+$/, "");
+          link.target = "_blank";
+          link.rel = "noreferrer";
+          listItem.appendChild(link);
+          policyList.appendChild(listItem);
+        });
+      } catch (error) {
+        policyListFallback.hidden = false;
+      }
+    };
+
     fetchPolicy();
+    buildPolicyList();
   </script>
 </body>
 </html>
