@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/HomeNav.css">
+  <style>
+    :root {
+      color-scheme: light;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      color: #0f172a;
+      background: #f8fafc;
+    }
+
+    main {
+      max-width: 920px;
+      margin: 96px auto 64px;
+      padding: 0 24px 48px;
+      line-height: 1.7;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      color: #475569;
+      margin-bottom: 24px;
+    }
+
+    .doc-card {
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+      padding: 24px;
+      min-height: 220px;
+    }
+
+    .doc-card pre {
+      white-space: pre-wrap;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      color: #0f172a;
+    }
+
+    .status {
+      font-weight: 600;
+      color: #2563eb;
+      margin-bottom: 16px;
+    }
+
+    .fallback {
+      margin-top: 20px;
+      padding: 16px;
+      border-radius: 12px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+    }
+
+    .fallback a {
+      color: #1d4ed8;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div id="nav-placeholder"></div>
+
+  <main>
+    <h1>Privacy Policy</h1>
+    <p class="intro">
+      This page pulls the latest privacy policy from the public repository. If the policy cannot be
+      loaded automatically, the source link below will take you directly to it.
+    </p>
+
+    <section class="doc-card" aria-live="polite">
+      <div class="status" id="policy-status">Loading policy…</div>
+      <pre id="policy-content"></pre>
+      <div class="fallback" id="policy-fallback" hidden>
+        View the policy in the source repository:
+        <a href="https://github.com/abkofficial/privacy-policy">https://github.com/abkofficial/privacy-policy</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/javascript/nav.js"></script>
+  <script>
+    const policyStatus = document.getElementById("policy-status");
+    const policyContent = document.getElementById("policy-content");
+    const policyFallback = document.getElementById("policy-fallback");
+
+    const policySources = [
+      "https://raw.githubusercontent.com/abkofficial/privacy-policy/main/README.md",
+      "https://raw.githubusercontent.com/abkofficial/privacy-policy/main/index.html",
+    ];
+
+    const renderText = (text) => {
+      policyContent.textContent = text.trim();
+      policyStatus.textContent = "Policy updated from source repository.";
+    };
+
+    const renderHtml = (html) => {
+      policyContent.innerHTML = html.trim();
+      policyStatus.textContent = "Policy updated from source repository.";
+    };
+
+    const showFallback = () => {
+      policyStatus.textContent = "Unable to load the policy automatically.";
+      policyFallback.hidden = false;
+    };
+
+    const fetchPolicy = async () => {
+      for (const url of policySources) {
+        try {
+          const response = await fetch(url, { cache: "no-store" });
+          if (!response.ok) {
+            continue;
+          }
+
+          const data = await response.text();
+          if (url.endsWith(".html")) {
+            renderHtml(data);
+          } else {
+            renderText(data);
+          }
+          return;
+        } catch (error) {
+          // Continue to the next source if available.
+        }
+      }
+
+      showFallback();
+    };
+
+    fetchPolicy();
+  </script>
+</body>
+</html>
